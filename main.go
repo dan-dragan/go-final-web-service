@@ -9,9 +9,16 @@ import (
 	"github.com/dan-dragan/go-final-web-service/models"
 )
 
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
 func main() {
 	var cfg models.Config
-	cfg.LoadConfiguration("go-final-web-service.json")
+	err := cfg.LoadConfiguration("go-final-web-service.json")
+	check(err)
 	controllers.RegisterControllers()
 	go func() {
 		err := http.ListenAndServe(fmt.Sprintf("%s.%d", cfg.Host, cfg.Port), nil)

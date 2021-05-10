@@ -16,14 +16,16 @@ type Config struct {
 	Port int    `json:"port"`
 }
 
-func (cfg *Config) LoadConfiguration(file string) {
+func (cfg *Config) LoadConfiguration(file string) error {
 	configFile, err := os.Open(file)
 	deferredClose(configFile)
 	if err != nil {
 		fmt.Println(err.Error())
+		return err
 	}
 	jsonParser := json.NewDecoder(configFile)
 	jsonParser.Decode(&cfg)
+	return nil
 }
 
 func deferredClose(configFile *os.File) {
