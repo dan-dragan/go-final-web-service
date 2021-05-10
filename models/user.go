@@ -22,7 +22,7 @@ func GetUsers() []*User {
 
 func AddUser(u User) (User, error) {
 	if u.ID != 0 {
-		return User{}, errors.New("New User must not include id or it must be set to zero")
+		return User{}, errors.New("new User must not include id or it must be set to zero")
 	}
 	u.ID = nextID
 	nextID++

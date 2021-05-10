@@ -11,6 +11,13 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# backup files
+*.bak
+*.bck
+
+#local files must stay local
+*.local
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 __debug_bin
