@@ -16,18 +16,18 @@ type Config struct {
 	Port int    `json:"port"`
 }
 
-func (cfg *Config) LoadConfiguration(file string) error {
+func (pCfg *Config) LoadConfiguration(file string) error {
 	configFile, err := os.Open(file)
-	deferredClose(configFile)
+	defer configFile.Close()
 	if err != nil {
 		fmt.Println(err.Error())
 		return err
 	}
 	jsonParser := json.NewDecoder(configFile)
-	jsonParser.Decode(&cfg)
+	err2 := jsonParser.Decode(pCfg)
+	if err2 != nil {
+		fmt.Println(err2.Error())
+		return err2
+	}
 	return nil
-}
-
-func deferredClose(configFile *os.File) {
-	defer configFile.Close()
 }
