@@ -21,7 +21,7 @@ func main() {
 	check(err)
 	controllers.RegisterControllers()
 	go func() {
-		err := http.ListenAndServe(fmt.Sprintf("%s.%d", cfg.Host, cfg.Port), nil)
+		err := http.ListenAndServe(fmt.Sprintf("%s:%d", cfg.Host, cfg.Port), nil)
 		if err != nil {
 			log.Fatal(err)
 		}
