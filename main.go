@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/dan-dragan/go-final-web-service/controllers"
@@ -8,5 +9,6 @@ import (
 
 func main() {
 	controllers.RegisterControllers()
-	http.ListenAndServe(":3000", nil)
+	err := http.ListenAndServe(":3000", nil)
+	log.Fatal(err)
 }
