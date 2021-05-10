@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,5 +11,10 @@ import (
 func main() {
 	controllers.RegisterControllers()
 	err := http.ListenAndServe(":3000", nil)
-	log.Fatal(err)
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println("Http server succesfully started  on port 3000")
+	}
+
 }
