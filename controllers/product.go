@@ -83,7 +83,7 @@ func (pc *productController) put(id int64, w http.ResponseWriter, r *http.Reques
 		w.Write([]byte("Could not parse product object"))
 		return
 	}
-	if id != p.productId {
+	if id != p.ProductId {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("ID of submitted product must match ID in URL"))
 		return
@@ -117,7 +117,7 @@ func (pc *productController) parseRequest(r *http.Request) (models.Product, erro
 	return p, nil
 }
 
-func newproductController() *productController {
+func newProductController() *productController {
 	return &productController{
 		productIDPattern: regexp.MustCompile(`^/products/(\d+)/?`),
 	}
