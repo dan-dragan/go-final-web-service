@@ -22,7 +22,7 @@ func main() {
 	err := cfg.LoadConfiguration("go-final-web-service.json")
 	check(err)
 
-	pDb, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/test", cfg.Database.Username, cfg.Database.Password, cfg.Database.Host, cfg.Database.Port))
+	pDb, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?allowNativePasswords=true&tls=true", cfg.Database.Username, cfg.Database.Password, cfg.Database.Host, cfg.Database.Port, cfg.Database.Name))
 	check(err)
 	defer pDb.Close()
 
