@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"regexp"
@@ -11,6 +12,7 @@ import (
 
 type productController struct {
 	productIDPattern *regexp.Regexp
+	PDB              *sql.DB
 }
 
 func (uc productController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -117,8 +119,10 @@ func (pc *productController) parseRequest(r *http.Request) (models.Product, erro
 	return p, nil
 }
 
-func newProductController() *productController {
+func newProductController(pDB *sql.DB) *productController {
+	models.ProductDB = pDB
 	return &productController{
 		productIDPattern: regexp.MustCompile(`^/products/(\d+)/?`),
+		PDB:              pDB,
 	}
 }

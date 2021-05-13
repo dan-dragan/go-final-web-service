@@ -19,6 +19,8 @@ type Product struct {
 var (
 	Products   []*Product
 	nextProdID int64 = 1
+	ProductDB              *sql.DB
+}
 )
 
 func GetProducts() []*Product {

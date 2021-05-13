@@ -13,7 +13,7 @@ func RegisterControllers(pDB *sql.DB) {
 	http.Handle("/users", *uc)
 	http.Handle("/users/", *uc)
 
-	pc := newProductController()
+	pc := newProductController(pDB)
 
 	http.Handle("/products", *pc)
 	http.Handle("/products/", *pc)

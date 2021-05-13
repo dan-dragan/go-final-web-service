@@ -1,12 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/dan-dragan/go-final-web-service/controllers"
 	"github.com/dan-dragan/go-final-web-service/models"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func check(e error) {
@@ -19,7 +21,13 @@ func main() {
 	var cfg models.Config
 	err := cfg.LoadConfiguration("go-final-web-service.json")
 	check(err)
-	controllers.RegisterControllers()
+
+	pDb, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/test", cfg.Database.Username, cfg.Database.Password, cfg.Database.Host, cfg.Database.Port))
+	check(err)
+	defer pDb.Close()
+
+	controllers.RegisterControllers(pDb)
+
 	go func() {
 		err := http.ListenAndServe(fmt.Sprintf("%s:%d", cfg.Host, cfg.Port), nil)
 		if err != nil {
