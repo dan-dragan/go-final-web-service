@@ -3,7 +3,10 @@
 		"host":"jab-lrn-productsapi-mysql1.mysql.database.azure.com",
 		"port":3306,
 		"username":"sqlproducts@jab-lrn-productsapi-mysql1",
-		"password":"Gangsta109"
+		"password":"Gangsta109",
+		"name": "products",
+        "socket" : "MYSQL",
+        "ssl": true		
 	},
 	"host":"127.0.0.1",
 	"port": 3000
