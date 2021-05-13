@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 )
@@ -19,8 +20,7 @@ type Product struct {
 var (
 	Products   []*Product
 	nextProdID int64 = 1
-	ProductDB              *sql.DB
-}
+	ProductDB  *sql.DB
 )
 
 func GetProducts() []*Product {
@@ -33,7 +33,17 @@ func AddProduct(p Product) (Product, error) {
 	}
 	p.ProductId = nextProdID
 	nextProdID++
-	Products = append(Products, &p)
+	//Products = append(Products, &p)
+	// perform a db.Query insert
+	insert, err := ProductDB.Query(fmt.Sprintf("CALL `products`.`productsAddOrEdit`(%d, %s, %s, %s, %s, %f, %f,%s)",
+		p.ProductId, p.ProductName, p.ProductCode, p.ReleaseDate, p.Description, p.Price, p.StarRating, p.ImageUrl))
+
+	// if there is an error inserting, handle it
+	if err != nil {
+		panic(err.Error())
+	}
+	// be careful deferring Queries if you are using transactions
+	defer insert.Close()
 	return p, nil
 }
 
