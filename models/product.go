@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 )
 
 type Product struct {
@@ -35,8 +36,9 @@ func AddProduct(p Product) (Product, error) {
 	nextProdID++
 	//Products = append(Products, &p)
 	// perform a db.Query insert
-	insert, err := ProductDB.Query(fmt.Sprintf("CALL `products`.`productsAddOrEdit`(%d, %s, %s, %s, %s, %f, %f,%s)",
-		p.ProductId, p.ProductName, p.ProductCode, p.ReleaseDate, p.Description, p.Price, p.StarRating, p.ImageUrl))
+	query := fmt.Sprintf("CALL `products`.`productsAddOrEdit`(%d, '%s', '%s', '%s', '%s', %f, %f, '%s')", p.ProductId, p.ProductName, p.ProductCode, p.ReleaseDate, p.Description, p.Price, p.StarRating, p.ImageUrl)
+	log.Output(1, fmt.Sprintf("query is %s", query))
+	insert, err := ProductDB.Query(query)
 
 	// if there is an error inserting, handle it
 	if err != nil {
